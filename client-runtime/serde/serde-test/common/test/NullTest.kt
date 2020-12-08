@@ -19,9 +19,9 @@ class NullTest {
                 field(Y_DESCRIPTOR)
             }
 
-            fun deserialize(deserializer: Deserializer): AnonStruct? {
+            fun deserialize(deserializer: Deserializer): AnonStruct {
                 val result = AnonStruct()
-                return if (deserializer.deserializeStruct(OBJ_DESCRIPTOR) {
+                deserializer.deserializeStruct(OBJ_DESCRIPTOR) {
                     loop@ while (true) {
                         when (findNextFieldIndex()) {
                             X_DESCRIPTOR.index -> result.x = deserializeInt()
@@ -30,7 +30,8 @@ class NullTest {
                             else -> throw RuntimeException("unexpected field in BasicStructTest deserializer")
                         }
                     }
-                }) result else null
+                }
+                return result
             }
         }
     }
@@ -44,9 +45,9 @@ class NullTest {
                 field(X_DESCRIPTOR)
             }
 
-            fun deserialize(deserializer: Deserializer): ParentStruct? {
+            fun deserialize(deserializer: Deserializer): ParentStruct {
                 val result = ParentStruct()
-                return if (deserializer.deserializeStruct(OBJ_DESCRIPTOR) {
+                deserializer.deserializeStruct(OBJ_DESCRIPTOR) {
                         loop@ while (true) {
                             when (findNextFieldIndex()) {
                                 X_DESCRIPTOR.index -> result.childStruct = ChildStruct.deserialize(deserializer)
@@ -54,7 +55,8 @@ class NullTest {
                                 else -> throw RuntimeException("unexpected field in BasicStructTest deserializer")
                             }
                         }
-                    }) result else null
+                    }
+                return result
             }
         }
     }
@@ -71,9 +73,9 @@ class NullTest {
                 field(Y_DESCRIPTOR)
             }
 
-            fun deserialize(deserializer: Deserializer): ChildStruct? {
+            fun deserialize(deserializer: Deserializer): ChildStruct {
                 val result = ChildStruct()
-                return if (deserializer.deserializeStruct(OBJ_DESCRIPTOR) {
+                deserializer.deserializeStruct(OBJ_DESCRIPTOR) {
                         loop@ while (true) {
                             when (findNextFieldIndex()) {
                                 X_DESCRIPTOR.index -> result.x = deserializeInt()
@@ -82,7 +84,8 @@ class NullTest {
                                 else -> throw RuntimeException("unexpected field in ChildStruct deserializer")
                             }
                         }
-                    }) result else null
+                    }
+                return result
             }
         }
     }
@@ -108,6 +111,7 @@ class NullTest {
      * Inputs that specify the value of an object as null, or do not reference the child at all should
      * deserialize those children as null references.
      */
+    // This test fails intentionally to illustrate issue w/ null references w/ existing deserde API.
     @Test
     fun `it deserializes a reference to a null object`() {
         val jsonPayload = """

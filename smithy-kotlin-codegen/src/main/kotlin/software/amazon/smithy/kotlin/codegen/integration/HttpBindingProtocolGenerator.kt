@@ -14,6 +14,8 @@
  */
 package software.amazon.smithy.kotlin.codegen.integration
 
+import software.amazon.smithy.aws.traits.protocols.AwsJson1_0Trait
+import software.amazon.smithy.aws.traits.protocols.RestJson1Trait
 import software.amazon.smithy.codegen.core.CodegenException
 import software.amazon.smithy.codegen.core.Symbol
 import software.amazon.smithy.codegen.core.SymbolReference
@@ -111,17 +113,21 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
     open fun getHttpBindingOperations(ctx: ProtocolGenerator.GenerationContext): List<OperationShape> {
         val topDownIndex: TopDownIndex = TopDownIndex.of(ctx.model)
 
-        return topDownIndex.getContainedOperations(ctx.service)
-            .filter { op ->
-                val hasHttpTrait = op.hasTrait(HttpTrait::class.java)
-                if (!hasHttpTrait) {
-                    LOGGER.warning(
-                        "Unable to fetch $protocol protocol request bindings for ${op.id} because " +
-                            "it does not have an http binding trait"
-                    )
-                }
-                hasHttpTrait
-            }.toList<OperationShape>()
+        return when (ctx.protocol) {
+            RestJson1Trait.ID -> topDownIndex.getContainedOperations(ctx.service)
+                .filter { op ->
+                    val hasHttpTrait = op.hasTrait(HttpTrait::class.java)
+                    if (!hasHttpTrait) {
+                        LOGGER.warning(
+                            "Unable to fetch $protocol protocol request bindings for ${op.id} because " +
+                                    "it does not have an http binding trait"
+                        )
+                    }
+                    hasHttpTrait
+                }.toList<OperationShape>()
+            AwsJson1_0Trait.ID -> topDownIndex.getContainedOperations(ctx.service).toList()
+            else -> TODO("Protocol ${ctx.protocol} is not implemented.")
+        }
     }
 
     /**
@@ -298,7 +304,7 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
             .addReference(ref)
             .build()
 
-        val httpTrait = op.expectTrait(HttpTrait::class.java)
+        val httpTrait = op.getTrait(HttpTrait::class.java).orElse(AWS_REST_HTTP_TRAIT)
         val requestBindings = bindingIndex.getRequestBindings(op)
         ctx.delegator.useShapeWriter(serializerSymbol) { writer ->
             // import all of http, http.request, and serde packages. All serializers requires one or more of the symbols

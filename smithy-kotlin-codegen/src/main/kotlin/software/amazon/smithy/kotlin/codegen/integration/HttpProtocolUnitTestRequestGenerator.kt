@@ -14,10 +14,7 @@
  */
 package software.amazon.smithy.kotlin.codegen.integration
 
-import software.amazon.smithy.kotlin.codegen.KotlinDependency
-import software.amazon.smithy.kotlin.codegen.ShapeValueGenerator
-import software.amazon.smithy.kotlin.codegen.defaultName
-import software.amazon.smithy.kotlin.codegen.hasStreamingMember
+import software.amazon.smithy.kotlin.codegen.*
 import software.amazon.smithy.protocoltests.traits.HttpRequestTestCase
 
 /**
@@ -120,8 +117,10 @@ open class HttpProtocolUnitTestRequestGenerator protected constructor(builder: B
      * configures a mock HttpClientEngine and an idempotency token generator appropriate for protocol tests.
      */
     open fun renderConfigureServiceClient(test: HttpRequestTestCase) {
+        // ctx.service.hasIdempotentTokenMember(ctx.model)
+
         writer.write("httpClientEngine = mockEngine")
-            .write("idempotencyTokenProvider = IdempotencyTokenProvider { \"00000000-0000-4000-8000-000000000000\" }")
+            //.write("idempotencyTokenProvider = IdempotencyTokenProvider { \"00000000-0000-4000-8000-000000000000\" }")
     }
 
     private fun renderExpectedQueryParams(test: HttpRequestTestCase) {

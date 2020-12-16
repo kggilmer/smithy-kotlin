@@ -108,8 +108,10 @@ open class HttpProtocolUnitTestResponseGenerator protected constructor(builder: 
      * configures a mock HttpClientEngine and an idempotency token generator appropriate for protocol tests.
      */
     open fun renderConfigureServiceClient(test: HttpResponseTestCase) {
+        // ctx.service.hasIdempotentTokenMember(ctx.model)
+
         writer.write("httpClientEngine = mockEngine")
-            .write("idempotencyTokenProvider = IdempotencyTokenProvider { \"00000000-0000-4000-8000-000000000000\" }")
+            // .write("idempotencyTokenProvider = IdempotencyTokenProvider { \"00000000-0000-4000-8000-000000000000\" }")
     }
 
     /**

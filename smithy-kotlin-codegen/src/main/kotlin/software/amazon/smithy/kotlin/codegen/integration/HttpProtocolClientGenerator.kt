@@ -18,6 +18,7 @@ import software.amazon.smithy.codegen.core.Symbol
 import software.amazon.smithy.kotlin.codegen.*
 import software.amazon.smithy.model.knowledge.OperationIndex
 import software.amazon.smithy.model.knowledge.TopDownIndex
+import software.amazon.smithy.model.pattern.UriPattern
 import software.amazon.smithy.model.shapes.OperationShape
 import software.amazon.smithy.model.traits.HttpTrait
 
@@ -85,6 +86,8 @@ abstract class HttpSerde(private val serdeProvider: String, private val generate
         }
     }
 }
+
+val AWS_REST_HTTP_TRAIT: HttpTrait = HttpTrait.builder().code(200).method("POST").uri(UriPattern.parse("/")).build()
 
 /**
  * Renders an implementation of a service interface for HTTP protocol
@@ -181,14 +184,15 @@ open class HttpProtocolClientGenerator(
             .closeBlock("}")
     }
 
+
     /**
-     * Renders the operation body up to the point where the call is executed. This function is responsbile for setting
+     * Renders the operation body up to the point where the call is executed. This function is responsible for setting
      * up the execution context used for this operation
      */
     protected open fun renderOperationSetup(writer: KotlinWriter, opIndex: OperationIndex, op: OperationShape) {
         val inputShape = opIndex.getInput(op)
         val outputShape = opIndex.getOutput(op)
-        val httpTrait = op.expectTrait(HttpTrait::class.java)
+        val httpTrait = op.getTrait(HttpTrait::class.java).orElse(AWS_REST_HTTP_TRAIT)
 
         if (!inputShape.isPresent) {
             // no serializer implementation is generated for operations with no input, inline the HTTP

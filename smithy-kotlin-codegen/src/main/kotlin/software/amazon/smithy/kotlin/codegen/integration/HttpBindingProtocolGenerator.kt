@@ -20,6 +20,7 @@ import software.amazon.smithy.codegen.core.CodegenException
 import software.amazon.smithy.codegen.core.Symbol
 import software.amazon.smithy.codegen.core.SymbolReference
 import software.amazon.smithy.kotlin.codegen.*
+import software.amazon.smithy.model.Model
 import software.amazon.smithy.model.knowledge.HttpBinding
 import software.amazon.smithy.model.knowledge.HttpBindingIndex
 import software.amazon.smithy.model.knowledge.TopDownIndex
@@ -125,6 +126,7 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
                     }
                     hasHttpTrait
                 }.toList<OperationShape>()
+            // MOve this into another class (subclassing aws/rest)
             AwsJson1_0Trait.ID -> topDownIndex.getContainedOperations(ctx.service).toList()
             else -> TODO("Protocol ${ctx.protocol} is not implemented.")
         }
@@ -305,7 +307,7 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
             .build()
 
         val httpTrait = op.getTrait(HttpTrait::class.java).orElse(AWS_REST_HTTP_TRAIT)
-        val requestBindings = bindingIndex.getRequestBindings(op)
+        val requestBindings = resolveRequestBindings(ctx.protocol, ctx.model, op)
         ctx.delegator.useShapeWriter(serializerSymbol) { writer ->
             // import all of http, http.request, and serde packages. All serializers requires one or more of the symbols
             // and most require quite a few. Rather than try and figure out which specific ones are used just take them
@@ -319,7 +321,7 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
             writer.write("")
                 .openBlock("class \$L(val input: \$L) : HttpSerialize {", op.serializerName(), inputSymbol.name)
                 .call {
-                    val memberShapes = requestBindings.values.filter { it.location == HttpBinding.Location.DOCUMENT }.map { it.member }
+                    val memberShapes = requestBindings.filter { it.location == HttpBinding.Location.DOCUMENT }.map { it.member }
                     renderSerdeCompanionObject(ctx, memberShapes, writer)
                 }
                 .call {
@@ -331,9 +333,53 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
         }
     }
 
+    private fun resolveRequestBindings(protocol: ShapeId, model: Model, op: OperationShape): List<GeneralHttpBinding> {
+        return when (protocol) {
+            RestJson1Trait.ID -> {
+                val bindingIndex = HttpBindingIndex.of(model)
+                bindingIndex.getRequestBindings(op).values.map { GeneralHttpBinding.fromHttpBinding(it) }
+            }
+            AwsJson1_0Trait.ID -> {
+                val inputs = model.expectShape(op.input.get())
+
+                inputs.members().map { member -> GeneralHttpBinding(member, HttpBinding.Location.DOCUMENT, "")  }.toList()
+            }
+            else -> error("Unimplemented protocol handing for $protocol")
+        }
+    }
+
+    private fun resolveResponseBindings(protocol: ShapeId, model: Model, op: ShapeId): List<GeneralHttpBinding> {
+        return when (protocol) {
+            RestJson1Trait.ID -> {
+                val bindingIndex = HttpBindingIndex.of(model)
+                bindingIndex.getResponseBindings(op).values.map { GeneralHttpBinding.fromHttpBinding(it) }
+            }
+            AwsJson1_0Trait.ID -> {
+
+                when (val shape = model.expectShape(op)) {
+                    is OperationShape -> {
+                        val outputs = model.expectShape(shape.output.get())
+
+                        outputs.members().map { member -> GeneralHttpBinding(member, HttpBinding.Location.DOCUMENT, "")  }.toList()
+                    }
+                    is StructureShape -> {
+                        val outputs = shape.members()
+
+                        outputs.map { member -> GeneralHttpBinding(member, HttpBinding.Location.DOCUMENT, "")  }.toList()
+                    }
+                    else -> {
+                        error("$shape isn't handled")
+                    }
+                }
+            }
+            else -> error("Unimplemented protocol handing for $protocol")
+        }
+    }
+
     /**
      * Generate the field descriptors
      */
+    // Move up to top
     private fun renderSerdeCompanionObject(
         ctx: ProtocolGenerator.GenerationContext,
         members: List<MemberShape>,
@@ -395,7 +441,7 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
     private fun resolveUriPath(
         ctx: ProtocolGenerator.GenerationContext,
         httpTrait: HttpTrait,
-        pathBindings: List<HttpBinding>,
+        pathBindings: List<GeneralHttpBinding>,
         writer: KotlinWriter
     ): String {
         return httpTrait.uri.segments.joinToString(
@@ -436,7 +482,7 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
         ctx: ProtocolGenerator.GenerationContext,
         httpTrait: HttpTrait,
         contentType: String,
-        requestBindings: Map<String, HttpBinding>,
+        requestBindings: List<GeneralHttpBinding>,
         writer: KotlinWriter
     ) {
         writer.openBlock("override suspend fun serialize(builder: HttpRequestBuilder, serializationContext: SerializationContext) {")
@@ -444,8 +490,8 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
             .write("")
             .call {
                 // URI components
-                val pathBindings = requestBindings.values.filter { it.location == HttpBinding.Location.LABEL }
-                val queryBindings = requestBindings.values.filter { it.location == HttpBinding.Location.QUERY }
+                val pathBindings = requestBindings.filter { it.location == HttpBinding.Location.LABEL }
+                val queryBindings = requestBindings.filter { it.location == HttpBinding.Location.QUERY }
                 val resolvedPath = resolveUriPath(ctx, httpTrait, pathBindings, writer)
 
                 writer.withBlock("builder.url {", "}") {
@@ -459,11 +505,11 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
             .write("")
             .call {
                 // headers
-                val headerBindings = requestBindings.values
+                val headerBindings = requestBindings
                     .filter { it.location == HttpBinding.Location.HEADER }
                     .sortedBy { it.memberName }
 
-                val prefixHeaderBindings = requestBindings.values
+                val prefixHeaderBindings = requestBindings
                     .filter { it.location == HttpBinding.Location.PREFIX_HEADERS }
 
                 val setContentType = when (httpTrait.method.toUpperCase()) {
@@ -480,7 +526,7 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
                 if (setContentType || headerBindings.isNotEmpty() || prefixHeaderBindings.isNotEmpty()) {
                     writer.withBlock("builder.headers {", "}") {
                         if (setContentType) {
-                            write("append(\"Content-Type\", \"\$L\")", contentType)
+                            write("appendMissing(\"Content-Type\", listOf(\"\$L\"))", contentType)
                         }
                         renderStringValuesMapParameters(ctx, headerBindings, writer)
                         prefixHeaderBindings.forEach {
@@ -494,14 +540,14 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
             .write("")
             .call {
                 // payload member(s)
-                val httpPayload = requestBindings.values.firstOrNull { it.location == HttpBinding.Location.PAYLOAD }
+                val httpPayload = requestBindings.firstOrNull { it.location == HttpBinding.Location.PAYLOAD }
                 if (httpPayload != null) {
                     renderExplicitHttpPayloadSerializer(ctx, httpPayload, writer)
                 } else {
                     // Unbound document members that should be serialized into the document format for the protocol.
                     // The generated code is the same across protocols and the serialization provider instance
                     // passed into the function is expected to handle the formatting required by the protocol
-                    val documentMembers = requestBindings.values
+                    val documentMembers = requestBindings
                         .filter { it.location == HttpBinding.Location.DOCUMENT }
                         .sortedBy { it.memberName }
 
@@ -516,7 +562,7 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
         // literals in the URI
         queryLiterals: Map<String, String>,
         // shape bindings
-        queryBindings: List<HttpBinding>,
+        queryBindings: List<GeneralHttpBinding>,
         writer: KotlinWriter
     ) {
 
@@ -533,7 +579,7 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
     // shared implementation for rendering members that belong to StringValuesMap (e.g. Header or Query parameters)
     private fun renderStringValuesMapParameters(
         ctx: ProtocolGenerator.GenerationContext,
-        bindings: List<HttpBinding>,
+        bindings: List<GeneralHttpBinding>,
         writer: KotlinWriter
     ) {
         val bindingIndex = HttpBindingIndex.of(ctx.model)
@@ -638,7 +684,7 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
      */
     private fun renderUnboundPayloadSerde(
         ctx: ProtocolGenerator.GenerationContext,
-        members: List<HttpBinding>,
+        members: List<GeneralHttpBinding>,
         writer: KotlinWriter
     ) {
         if (members.isEmpty()) return
@@ -662,7 +708,7 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
      */
     private fun renderExplicitHttpPayloadSerializer(
         ctx: ProtocolGenerator.GenerationContext,
-        binding: HttpBinding,
+        binding: GeneralHttpBinding,
         writer: KotlinWriter
     ) {
         // explicit payload member as the sole payload
@@ -733,7 +779,7 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
             .addReference(ref)
             .build()
 
-        val responseBindings = bindingIndex.getResponseBindings(op)
+        val responseBindings = resolveResponseBindings(ctx.protocol, ctx.model, op.id)
         ctx.delegator.useShapeWriter(deserializerSymbol) { writer ->
             // import all of http, http.response , and serde packages. All serializers requires one or more of the symbols
             // and most require quite a few. Rather than try and figure out which specific ones are used just take them
@@ -748,7 +794,7 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
                 .openBlock("class \$L : HttpDeserialize {", op.deserializerName())
                 .write("")
                 .call {
-                    val memberShapes = responseBindings.values
+                    val memberShapes = responseBindings
                         .filter { it.location == HttpBinding.Location.DOCUMENT }
                         .map { it.member }
                     renderSerdeCompanionObject(ctx, memberShapes, writer)
@@ -800,7 +846,7 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
                 }
                 .write("")
                 .call {
-                    val responseBindings = bindingIndex.getResponseBindings(shape)
+                    val responseBindings = resolveResponseBindings(ctx.protocol, ctx.model, shape.id)
                     renderHttpDeserialize(ctx, outputSymbol, responseBindings, writer)
                 }
                 .closeBlock("}")
@@ -810,7 +856,7 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
     private fun renderHttpDeserialize(
         ctx: ProtocolGenerator.GenerationContext,
         outputSymbol: Symbol,
-        responseBindings: Map<String, HttpBinding>,
+        responseBindings: List<GeneralHttpBinding>,
         writer: KotlinWriter
     ) {
         writer.openBlock(
@@ -821,7 +867,7 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
             .write("")
             .call {
                 // headers
-                val headerBindings = responseBindings.values
+                val headerBindings = responseBindings
                     .filter { it.location == HttpBinding.Location.HEADER }
                     .sortedBy { it.memberName }
 
@@ -829,7 +875,7 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
 
                 // prefix headers
                 // spec: "Only a single structure member can be bound to httpPrefixHeaders"
-                responseBindings.values.firstOrNull { it.location == HttpBinding.Location.PREFIX_HEADERS }
+                responseBindings.firstOrNull { it.location == HttpBinding.Location.PREFIX_HEADERS }
                     ?.let {
                         renderDeserializePrefixHeaders(ctx, it, writer)
                     }
@@ -838,14 +884,14 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
             .call {
                 // document members
                 // payload member(s)
-                val httpPayload = responseBindings.values.firstOrNull { it.location == HttpBinding.Location.PAYLOAD }
+                val httpPayload = responseBindings.firstOrNull { it.location == HttpBinding.Location.PAYLOAD }
                 if (httpPayload != null) {
                     renderExplicitHttpPayloadDeserializer(ctx, httpPayload, writer)
                 } else {
                     // Unbound document members that should be deserialized from the document format for the protocol.
                     // The generated code is the same across protocols and the serialization provider instance
                     // passed into the function is expected to handle the formatting required by the protocol
-                    val documentMembers = responseBindings.values
+                    val documentMembers = responseBindings
                         .filter { it.location == HttpBinding.Location.DOCUMENT }
                         .sortedBy { it.memberName }
                         .map { it.member }
@@ -860,7 +906,7 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
                 }
             }
             .call {
-                responseBindings.values.firstOrNull { it.location == HttpBinding.Location.RESPONSE_CODE }
+                responseBindings.firstOrNull { it.location == HttpBinding.Location.RESPONSE_CODE }
                     ?.let {
                         renderDeserializeResponseCode(ctx, it, writer)
                     }
@@ -872,7 +918,7 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
     /**
      * Render mapping http response code value to response type.
      */
-    private fun renderDeserializeResponseCode(ctx: ProtocolGenerator.GenerationContext, binding: HttpBinding, writer: KotlinWriter) {
+    private fun renderDeserializeResponseCode(ctx: ProtocolGenerator.GenerationContext, binding: GeneralHttpBinding, writer: KotlinWriter) {
         val memberName = binding.member.defaultName()
         val memberTarget = ctx.model.expectShape(binding.member.target)
 
@@ -886,7 +932,7 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
      */
     private fun renderDeserializeHeaders(
         ctx: ProtocolGenerator.GenerationContext,
-        bindings: List<HttpBinding>,
+        bindings: List<GeneralHttpBinding>,
         writer: KotlinWriter
     ) {
         bindings.forEach { hdrBinding ->
@@ -1000,7 +1046,7 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
 
     private fun renderDeserializePrefixHeaders(
         ctx: ProtocolGenerator.GenerationContext,
-        binding: HttpBinding,
+        binding: GeneralHttpBinding,
         writer: KotlinWriter
     ) {
         // prefix headers MUST target string or collection-of-string
@@ -1042,7 +1088,7 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
 
     private fun renderExplicitHttpPayloadDeserializer(
         ctx: ProtocolGenerator.GenerationContext,
-        binding: HttpBinding,
+        binding: GeneralHttpBinding,
         writer: KotlinWriter
     ) {
         val memberName = binding.member.defaultName()
@@ -1246,4 +1292,17 @@ fun Shape.serialKind(): String = when (this.type) {
     ShapeType.STRUCTURE -> "SerialKind.Struct"
     ShapeType.UNION -> "SerialKind.Struct"
     else -> throw CodegenException("unknown SerialKind for $this")
+}
+
+data class GeneralHttpBinding(
+    val member: MemberShape,
+    val location: HttpBinding.Location,
+    val locationName: String
+) {
+    companion object {
+        fun fromHttpBinding(httpBinding: HttpBinding): GeneralHttpBinding = GeneralHttpBinding(httpBinding.member, httpBinding.location, httpBinding.locationName)
+    }
+
+    val memberName: String
+        get() = member.memberName
 }

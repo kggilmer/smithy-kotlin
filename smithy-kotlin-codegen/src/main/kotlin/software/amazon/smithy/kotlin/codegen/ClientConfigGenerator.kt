@@ -21,6 +21,7 @@ class ClientConfigGenerator(
     vararg properties: ClientConfigProperty
 ) {
 
+    //TODO read this for property approach to protrocol specific
     private val props = mutableListOf<ClientConfigProperty>()
 
     init {

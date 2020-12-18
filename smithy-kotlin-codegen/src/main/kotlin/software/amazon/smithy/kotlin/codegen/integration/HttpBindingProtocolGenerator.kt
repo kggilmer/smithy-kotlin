@@ -813,7 +813,6 @@ abstract class HttpBindingProtocolGenerator : ProtocolGenerator {
     private fun generateExceptionDeserializer(ctx: ProtocolGenerator.GenerationContext, shape: StructureShape) {
         val outputSymbol = ctx.symbolProvider.toSymbol(shape)
 
-        val bindingIndex = HttpBindingIndex.of(ctx.model)
         val ref = SymbolReference.builder()
             .symbol(outputSymbol)
             .options(SymbolReference.ContextOption.DECLARE)

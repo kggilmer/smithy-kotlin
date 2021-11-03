@@ -1,0 +1,199 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>Deserializer</title>
+</head><body><link href="../../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../../";</script><script type="text/javascript" src="../../../../scripts/sourceset_dependencies.js" async></script><link href="../../../../styles/style.css" rel="Stylesheet"><link href="../../../../styles/logo-styles.css" rel="Stylesheet"><link href="../../../../styles/jetbrains-mono.css" rel="Stylesheet"><link href="../../../../styles/main.css" rel="Stylesheet"><script type="text/javascript" src="../../../../scripts/clipboard.js" async></script><script type="text/javascript" src="../../../../scripts/navigation-loader.js" async></script><script type="text/javascript" src="../../../../scripts/platform-content-handler.js" async></script><script type="text/javascript" src="../../../../scripts/main.js" async></script>
+  
+    <div id="container">
+      <div id="leftColumn"><a href="../../../../index.html">
+            <div id="logo"></div>
+          </a>
+        <div id="paneSearch"></div>
+        <div id="sideMenu"></div>
+      </div>
+      <div id="main">
+        <script type="text/javascript" src="../../../../scripts/main.js"></script><div id="leftToggler"><span class="icon-toggler"></span></div>
+
+        <div class="main-content" id="content" pageids="serde::aws.smithy.kotlin.runtime.serde/Deserializer///PointingToDeclaration//-1733193402">
+          <div class="navigation-wrapper" id="navigation-wrapper">
+            <div class="breadcrumbs"><a href="../../index.html">serde</a>/<a href="../index.html">aws.smithy.kotlin.runtime.serde</a>/<a href="index.html">Deserializer</a></div>
+            <div class="pull-right d-flex">
+              <div id="searchBar"></div>
+            </div>
+          </div>
+          <div class="cover ">
+            <h1 class="cover"><span><span>Deserializer</span></span></h1>
+            <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":runtime:serde:dokkaHtmlPartial/commonMain"><div class="symbol monospace">interface <a href="index.html">Deserializer</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><p class="paragraph">Deserializer is a format agnostic deserialization interface. Specific formats (e.g. JSON, XML, etc) implement this interface and handle the underlying raw decoding process and deal with details specific to that format.</p><p class="paragraph">This allows the same deserialization process to work between formats which is useful for code generation.</p><h3 class=""> Deserializing Structured Types</h3><p class="paragraph">A Kotlin class is represented as a structure with fields. The order the fields present themselves may not be guaranteed or consistent in some formats (e.g. JSON and XML). This requires deserialization to iterate over the fields found in the underlying stream and the deserializer will tell you which field was encountered. This is done by giving the serializer an <a href="../-sdk-object-descriptor/index.html">SdkObjectDescriptor</a> which describes the fields expected.</p><div class="sample-container"><code class="" theme="idea"><pre>data class Point(val x: Int, val y: Int)<br><br>val struct = deserializer.deserializeStruct()<br>var x: Int? = null<br>var y: Int? = null<br><br>val X_DESCRIPTOR = SdkFieldDescriptor("x")<br>val Y_DESCRIPTOR = SdkFieldDescriptor("y")<br>val OBJ_DESCRIPTOR = SdkObjectDescriptor.build() {<br>    field(X_DESCRIPTOR)<br>    field(Y_DESCRIPTOR)<br>}<br>loop@ while(true) {<br>    when(struct.findNextFieldIndexOrNull()) {<br>        X_DESCRIPTOR.index -&gt;  x = struct.deserializeInt()<br>        Y_DESCRIPTOR.index -&gt; y = struct.deserializeInt()<br>        null -&gt; break@loop<br>        else -&gt; struct.skipValue() // Unknown Field<br>    }<br>}<br>requireNotNull(x)<br>requireNotNull(y)<br>val myPoint = Point(x!!, y!!)</pre></code></div><h3 class=""> Deserializing Collections</h3><p class="paragraph">Collections such as List and Map work almost the same as deserializing a structured type except iteration is over elements (or entries) instead of fields. Deserialization implementations should drive the iterator until it is exhausted and for each element/entry call the appropriate <code>deserialize*</code> methods.</p></div></div>
+          </div>
+          <div class="tabbedcontent">
+            <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Types">Types</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Extensions">Extensions</button></div>
+            <div class="tabs-section-body">
+              <h2 class="">Types</h2>
+              <div class="table" data-togglable="Types"><a data-name="839978456%2FClasslikes%2F-1733193402" anchor-label="ElementIterator" id="839978456%2FClasslikes%2F-1733193402" data-filterable-set=":runtime:serde:dokkaHtmlPartial/commonMain"></a>
+                <div class="table-row" data-filterable-current=":runtime:serde:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:serde:dokkaHtmlPartial/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-element-iterator/index.html"><span>Element</span><wbr><span><span>Iterator</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="839978456%2FClasslikes%2F-1733193402"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":runtime:serde:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:serde:dokkaHtmlPartial/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":runtime:serde:dokkaHtmlPartial/commonMain"><div class="symbol monospace">interface <a href="-element-iterator/index.html">ElementIterator</a> : <a href="../-primitive-deserializer/index.html">PrimitiveDeserializer</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<div class="brief "><p class="paragraph">Iterator over raw elements in a collection</p></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1661078686%2FClasslikes%2F-1733193402" anchor-label="EntryIterator" id="-1661078686%2FClasslikes%2F-1733193402" data-filterable-set=":runtime:serde:dokkaHtmlPartial/commonMain"></a>
+                <div class="table-row" data-filterable-current=":runtime:serde:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:serde:dokkaHtmlPartial/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-entry-iterator/index.html"><span>Entry</span><wbr><span><span>Iterator</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1661078686%2FClasslikes%2F-1733193402"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":runtime:serde:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:serde:dokkaHtmlPartial/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":runtime:serde:dokkaHtmlPartial/commonMain"><div class="symbol monospace">interface <a href="-entry-iterator/index.html">EntryIterator</a> : <a href="../-primitive-deserializer/index.html">PrimitiveDeserializer</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<div class="brief "><p class="paragraph">Iterator over map entries</p></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1604684762%2FClasslikes%2F-1733193402" anchor-label="FieldIterator" id="1604684762%2FClasslikes%2F-1733193402" data-filterable-set=":runtime:serde:dokkaHtmlPartial/commonMain"></a>
+                <div class="table-row" data-filterable-current=":runtime:serde:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:serde:dokkaHtmlPartial/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-field-iterator/index.html"><span>Field</span><wbr><span><span>Iterator</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1604684762%2FClasslikes%2F-1733193402"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":runtime:serde:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:serde:dokkaHtmlPartial/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":runtime:serde:dokkaHtmlPartial/commonMain"><div class="symbol monospace">interface <a href="-field-iterator/index.html">FieldIterator</a> : <a href="../-primitive-deserializer/index.html">PrimitiveDeserializer</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<div class="brief "><p class="paragraph">Iterator over struct fields</p></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h2 class="">Functions</h2>
+              <div class="table" data-togglable="Functions"><a data-name="-744336934%2FFunctions%2F-1733193402" anchor-label="deserializeList" id="-744336934%2FFunctions%2F-1733193402" data-filterable-set=":runtime:serde:dokkaHtmlPartial/commonMain"></a>
+                <div class="table-row" data-filterable-current=":runtime:serde:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:serde:dokkaHtmlPartial/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="deserialize-list.html"><span>deserialize</span><wbr><span><span>List</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-744336934%2FFunctions%2F-1733193402"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":runtime:serde:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:serde:dokkaHtmlPartial/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":runtime:serde:dokkaHtmlPartial/commonMain"><div class="symbol monospace">abstract suspend fun <a href="deserialize-list.html">deserializeList</a>(descriptor: <a href="../-sdk-field-descriptor/index.html">SdkFieldDescriptor</a>): <a href="-element-iterator/index.html">Deserializer.ElementIterator</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<div class="brief "><p class="paragraph">Begin deserialization of a list type. Use the returned <a href="-element-iterator/index.html">ElementIterator</a> to drive the deserialization process of the list to completion.</p></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-818935210%2FFunctions%2F-1733193402" anchor-label="deserializeMap" id="-818935210%2FFunctions%2F-1733193402" data-filterable-set=":runtime:serde:dokkaHtmlPartial/commonMain"></a>
+                <div class="table-row" data-filterable-current=":runtime:serde:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:serde:dokkaHtmlPartial/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="deserialize-map.html"><span>deserialize</span><wbr><span><span>Map</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-818935210%2FFunctions%2F-1733193402"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":runtime:serde:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:serde:dokkaHtmlPartial/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":runtime:serde:dokkaHtmlPartial/commonMain"><div class="symbol monospace">abstract suspend fun <a href="deserialize-map.html">deserializeMap</a>(descriptor: <a href="../-sdk-field-descriptor/index.html">SdkFieldDescriptor</a>): <a href="-entry-iterator/index.html">Deserializer.EntryIterator</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<div class="brief "><p class="paragraph">Begin deserialization of a map type. Use the returned <a href="-entry-iterator/index.html">EntryIterator</a> to drive the deserialization process of the map to completion.</p></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1921590264%2FFunctions%2F-1733193402" anchor-label="deserializeStruct" id="-1921590264%2FFunctions%2F-1733193402" data-filterable-set=":runtime:serde:dokkaHtmlPartial/commonMain"></a>
+                <div class="table-row" data-filterable-current=":runtime:serde:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:serde:dokkaHtmlPartial/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="deserialize-struct.html"><span>deserialize</span><wbr><span><span>Struct</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1921590264%2FFunctions%2F-1733193402"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":runtime:serde:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:serde:dokkaHtmlPartial/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":runtime:serde:dokkaHtmlPartial/commonMain"><div class="symbol monospace">abstract suspend fun <a href="deserialize-struct.html">deserializeStruct</a>(descriptor: <a href="../-sdk-object-descriptor/index.html">SdkObjectDescriptor</a>): <a href="-field-iterator/index.html">Deserializer.FieldIterator</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<div class="brief "><p class="paragraph">Begin deserialization of a structured type. Use the returned <a href="-field-iterator/index.html">FieldIterator</a> to drive the deserialization process of the struct to completion.</p></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h2 class="tabbedcontent">Extensions</h2>
+              <div class="table" data-togglable="Extensions"><a data-name="-437721951%2FExtensions%2F-1733193402" anchor-label="deserializeList" id="-437721951%2FExtensions%2F-1733193402" data-filterable-set=":runtime:serde:dokkaHtmlPartial/commonMain"></a>
+                <div class="table-row" data-filterable-current=":runtime:serde:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:serde:dokkaHtmlPartial/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../deserialize-list.html"><span>deserialize</span><wbr><span><span>List</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-437721951%2FExtensions%2F-1733193402"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":runtime:serde:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:serde:dokkaHtmlPartial/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":runtime:serde:dokkaHtmlPartial/commonMain"><div class="symbol monospace">suspend fun &lt;<a href="../deserialize-list.html">T</a>&gt; <a href="index.html">Deserializer</a>.<a href="../deserialize-list.html">deserializeList</a>(descriptor: <a href="../-sdk-field-descriptor/index.html">SdkFieldDescriptor</a>, block: suspend <a href="-element-iterator/index.html">Deserializer.ElementIterator</a>.() -&gt; <a href="../deserialize-list.html">T</a>): <a href="../deserialize-list.html">T</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1144356703%2FExtensions%2F-1733193402" anchor-label="deserializeMap" id="-1144356703%2FExtensions%2F-1733193402" data-filterable-set=":runtime:serde:dokkaHtmlPartial/commonMain"></a>
+                <div class="table-row" data-filterable-current=":runtime:serde:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:serde:dokkaHtmlPartial/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../deserialize-map.html"><span>deserialize</span><wbr><span><span>Map</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1144356703%2FExtensions%2F-1733193402"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":runtime:serde:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:serde:dokkaHtmlPartial/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":runtime:serde:dokkaHtmlPartial/commonMain"><div class="symbol monospace">suspend fun &lt;<a href="../deserialize-map.html">T</a>&gt; <a href="index.html">Deserializer</a>.<a href="../deserialize-map.html">deserializeMap</a>(descriptor: <a href="../-sdk-field-descriptor/index.html">SdkFieldDescriptor</a>, block: suspend <a href="-entry-iterator/index.html">Deserializer.EntryIterator</a>.() -&gt; <a href="../deserialize-map.html">T</a>): <a href="../deserialize-map.html">T</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-11408420%2FExtensions%2F-1733193402" anchor-label="deserializeStruct" id="-11408420%2FExtensions%2F-1733193402" data-filterable-set=":runtime:serde:dokkaHtmlPartial/commonMain"></a>
+                <div class="table-row" data-filterable-current=":runtime:serde:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:serde:dokkaHtmlPartial/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../deserialize-struct.html"><span>deserialize</span><wbr><span><span>Struct</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-11408420%2FExtensions%2F-1733193402"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":runtime:serde:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:serde:dokkaHtmlPartial/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":runtime:serde:dokkaHtmlPartial/commonMain"><div class="symbol monospace">suspend fun <a href="index.html">Deserializer</a>.<a href="../deserialize-struct.html">deserializeStruct</a>(descriptor: <a href="../-sdk-object-descriptor/index.html">SdkObjectDescriptor</a>, block: suspend <a href="-field-iterator/index.html">Deserializer.FieldIterator</a>.() -&gt; <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a>)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="go-to-top-icon"><a href="#content"></a></span><span>© 2021, Amazon Web Services, Inc. or its affiliates. All rights reserved.</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span></div>
+      </div>
+    </div>
+  
+</body></html>
+
+

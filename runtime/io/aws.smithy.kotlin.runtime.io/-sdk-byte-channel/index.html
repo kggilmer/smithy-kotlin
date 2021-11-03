@@ -1,0 +1,343 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>SdkByteChannel</title>
+</head><body><link href="../../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../../";</script><script type="text/javascript" src="../../../../scripts/sourceset_dependencies.js" async></script><link href="../../../../styles/style.css" rel="Stylesheet"><link href="../../../../styles/logo-styles.css" rel="Stylesheet"><link href="../../../../styles/jetbrains-mono.css" rel="Stylesheet"><link href="../../../../styles/main.css" rel="Stylesheet"><script type="text/javascript" src="../../../../scripts/clipboard.js" async></script><script type="text/javascript" src="../../../../scripts/navigation-loader.js" async></script><script type="text/javascript" src="../../../../scripts/platform-content-handler.js" async></script><script type="text/javascript" src="../../../../scripts/main.js" async></script>
+  
+    <div id="container">
+      <div id="leftColumn"><a href="../../../../index.html">
+            <div id="logo"></div>
+          </a>
+        <div id="paneSearch"></div>
+        <div id="sideMenu"></div>
+      </div>
+      <div id="main">
+        <script type="text/javascript" src="../../../../scripts/main.js"></script><div id="leftToggler"><span class="icon-toggler"></span></div>
+
+        <div class="main-content" id="content" pageids="io::aws.smithy.kotlin.runtime.io/SdkByteChannel///PointingToDeclaration//1616905611">
+          <div class="navigation-wrapper" id="navigation-wrapper">
+            <div class="breadcrumbs"><a href="../../index.html">io</a>/<a href="../index.html">aws.smithy.kotlin.runtime.io</a>/<a href="index.html">SdkByteChannel</a></div>
+            <div class="pull-right d-flex">
+              <div class="filter-section" id="filter-section"><button class="platform-tag platform-selector common-like" data-active="" data-filter=":runtime:io:dokkaHtmlPartial/commonMain">common</button></div>
+              <div id="searchBar"></div>
+            </div>
+          </div>
+          <div class="cover ">
+            <h1 class="cover"><span>Sdk</span><wbr><span>Byte</span><wbr><span><span>Channel</span></span></h1>
+            <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":runtime:io:dokkaHtmlPartial/commonMain"><div class="symbol monospace">interface <a href="index.html">SdkByteChannel</a> : <a href="../-sdk-byte-read-channel/index.html">SdkByteReadChannel</a>, <a href="../-sdk-byte-write-channel/index.html">SdkByteWriteChannel</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><p class="paragraph">Channel for asynchronous reading and writing sequences of bytes.</p><p class="paragraph">This is a buffered <strong>single-reader single writer channel</strong>.</p><p class="paragraph">Read operations can be invoked concurrently with write operations, but multiple reads or multiple writes cannot be invoked concurrently with themselves. Exceptions are <a href="close.html">close</a> and <a href="../../../../runtime/io/aws.smithy.kotlin.runtime.io/-sdk-byte-channel/flush.html">flush</a> which can be invoked concurrently with other operations including between themselves at any time.</p></div></div>
+          </div>
+          <div class="tabbedcontent">
+            <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Inherited functions">Inherited functions</button><button class="section-tab" data-togglable="Inherited properties">Inherited properties</button></div>
+            <div class="tabs-section-body">
+              <h2 class="">Inherited properties</h2>
+              <div class="table" data-togglable="Inherited properties"><a data-name="-622948386%2FProperties%2F1616905611" anchor-label="autoFlush" id="-622948386%2FProperties%2F1616905611" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"></a>
+                <div class="table-row" data-filterable-current=":runtime:io:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../-sdk-byte-write-channel/auto-flush.html">autoFlush</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-622948386%2FProperties%2F1616905611"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag common-like">common</div>
+                      </div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Inherited properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":runtime:io:dokkaHtmlPartial/commonMain"><a data-name="-622948386%2FProperties%2F1616905611" anchor-label="autoFlush" id="-622948386%2FProperties%2F1616905611" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"></a><div class="symbol monospace">abstract val <a href="../-sdk-byte-write-channel/auto-flush.html">autoFlush</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="-622948386%2FProperties%2F1616905611" anchor-label="autoFlush" id="-622948386%2FProperties%2F1616905611" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"></a><p class="paragraph">Returns <code>true</code> if the channel flushes automatically all pending bytes after every write operation. If <code>false</code> then flush only happens when <a href="../-sdk-byte-write-channel/flush.html">flush</a> is explicitly called or when the buffer is full.</p></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="858910608%2FProperties%2F1616905611" anchor-label="availableForRead" id="858910608%2FProperties%2F1616905611" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"></a>
+                <div class="table-row" data-filterable-current=":runtime:io:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../-sdk-byte-read-channel/available-for-read.html">availableForRead</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="858910608%2FProperties%2F1616905611"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag common-like">common</div>
+                      </div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Inherited properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":runtime:io:dokkaHtmlPartial/commonMain"><a data-name="858910608%2FProperties%2F1616905611" anchor-label="availableForRead" id="858910608%2FProperties%2F1616905611" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"></a><div class="symbol monospace">abstract val <a href="../-sdk-byte-read-channel/available-for-read.html">availableForRead</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="858910608%2FProperties%2F1616905611" anchor-label="availableForRead" id="858910608%2FProperties%2F1616905611" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"></a><p class="paragraph">Returns number of bytes that can be read without suspension. Read operations do no suspend and return immediately when this number is at least the number of bytes requested for read.</p></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1484755252%2FProperties%2F1616905611" anchor-label="availableForWrite" id="1484755252%2FProperties%2F1616905611" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"></a>
+                <div class="table-row" data-filterable-current=":runtime:io:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../-sdk-byte-write-channel/available-for-write.html">availableForWrite</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1484755252%2FProperties%2F1616905611"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag common-like">common</div>
+                      </div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Inherited properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":runtime:io:dokkaHtmlPartial/commonMain"><a data-name="1484755252%2FProperties%2F1616905611" anchor-label="availableForWrite" id="1484755252%2FProperties%2F1616905611" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"></a><div class="symbol monospace">abstract val <a href="../-sdk-byte-write-channel/available-for-write.html">availableForWrite</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="1484755252%2FProperties%2F1616905611" anchor-label="availableForWrite" id="1484755252%2FProperties%2F1616905611" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"></a><p class="paragraph">Returns the number of bytes that can be written without suspension. Write operations do not suspend and return immediately when this number is at least the number of bytes requested for write.</p></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1428445899%2FProperties%2F1616905611" anchor-label="isClosedForRead" id="1428445899%2FProperties%2F1616905611" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"></a>
+                <div class="table-row" data-filterable-current=":runtime:io:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../-sdk-byte-read-channel/is-closed-for-read.html">isClosedForRead</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1428445899%2FProperties%2F1616905611"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag common-like">common</div>
+                      </div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Inherited properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":runtime:io:dokkaHtmlPartial/commonMain"><a data-name="1428445899%2FProperties%2F1616905611" anchor-label="isClosedForRead" id="1428445899%2FProperties%2F1616905611" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"></a><div class="symbol monospace">abstract val <a href="../-sdk-byte-read-channel/is-closed-for-read.html">isClosedForRead</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="1428445899%2FProperties%2F1616905611" anchor-label="isClosedForRead" id="1428445899%2FProperties%2F1616905611" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"></a><p class="paragraph">Returns <code>true</code> if the channel is closed and no remaining bytes are available for read. It implies that availableForRead is zero.</p></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-890841766%2FProperties%2F1616905611" anchor-label="isClosedForWrite" id="-890841766%2FProperties%2F1616905611" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"></a>
+                <div class="table-row" data-filterable-current=":runtime:io:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../-sdk-byte-read-channel/is-closed-for-write.html">isClosedForWrite</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-890841766%2FProperties%2F1616905611"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag common-like">common</div>
+                      </div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Inherited properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":runtime:io:dokkaHtmlPartial/commonMain"><a data-name="-890841766%2FProperties%2F1616905611" anchor-label="isClosedForWrite" id="-890841766%2FProperties%2F1616905611" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"></a><div class="symbol monospace">abstract val <a href="../-sdk-byte-read-channel/is-closed-for-write.html">isClosedForWrite</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="-890841766%2FProperties%2F1616905611" anchor-label="isClosedForWrite" id="-890841766%2FProperties%2F1616905611" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"></a><p class="paragraph">Returns <code>true</code> if the channel is closed from the writer side. <a href="../-sdk-byte-read-channel/available-for-read.html">availableForRead</a> may be 0</p></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1241323843%2FProperties%2F1616905611" anchor-label="totalBytesWritten" id="1241323843%2FProperties%2F1616905611" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"></a>
+                <div class="table-row" data-filterable-current=":runtime:io:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../-sdk-byte-write-channel/total-bytes-written.html">totalBytesWritten</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1241323843%2FProperties%2F1616905611"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag common-like">common</div>
+                      </div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Inherited properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":runtime:io:dokkaHtmlPartial/commonMain"><a data-name="1241323843%2FProperties%2F1616905611" anchor-label="totalBytesWritten" id="1241323843%2FProperties%2F1616905611" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"></a><div class="symbol monospace">abstract val <a href="../-sdk-byte-write-channel/total-bytes-written.html">totalBytesWritten</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="1241323843%2FProperties%2F1616905611" anchor-label="totalBytesWritten" id="1241323843%2FProperties%2F1616905611" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"></a><p class="paragraph">Total number of bytes written to the channel.</p></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h2 class="">Functions</h2>
+              <div class="table" data-togglable="Functions"><a data-name="261989286%2FFunctions%2F1616905611" anchor-label="close" id="261989286%2FFunctions%2F1616905611" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"></a>
+                <div class="table-row" data-filterable-current=":runtime:io:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="close.html"><span><span>close</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="261989286%2FFunctions%2F1616905611"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag common-like">common</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":runtime:io:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":runtime:io:dokkaHtmlPartial/commonMain"><div class="symbol monospace">open override fun <a href="close.html">close</a>()<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<div class="brief "><p class="paragraph">Release any resources held by this object</p></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h2 class="">Inherited functions</h2>
+              <div class="table" data-togglable="Inherited functions"><a data-name="-1866347165%2FFunctions%2F1616905611" anchor-label="awaitContent" id="-1866347165%2FFunctions%2F1616905611" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"></a>
+                <div class="table-row" data-filterable-current=":runtime:io:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../-sdk-byte-read-channel/await-content.html"><span>await</span><wbr><span><span>Content</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1866347165%2FFunctions%2F1616905611"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag common-like">common</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":runtime:io:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":runtime:io:dokkaHtmlPartial/commonMain"><div class="symbol monospace">abstract suspend fun <a href="../-sdk-byte-read-channel/await-content.html">awaitContent</a>()<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<div class="brief "><p class="paragraph">Suspend until <i>some</i> data is available or channel is closed</p></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1712457206%2FFunctions%2F1616905611" anchor-label="cancel" id="-1712457206%2FFunctions%2F1616905611" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"></a>
+                <div class="table-row" data-filterable-current=":runtime:io:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../-sdk-byte-read-channel/cancel.html"><span><span>cancel</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1712457206%2FFunctions%2F1616905611"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag common-like">common</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":runtime:io:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":runtime:io:dokkaHtmlPartial/commonMain"><div class="symbol monospace">abstract fun <a href="../-sdk-byte-read-channel/cancel.html">cancel</a>(cause: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html">Throwable</a>?): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<div class="brief "><p class="paragraph">Close channel with optional cause cancellation. This is an idempotent operation — subsequent invocations of this function have no effect and return false</p></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="323297499%2FFunctions%2F1616905611" anchor-label="close" id="323297499%2FFunctions%2F1616905611" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"></a>
+                <div class="table-row" data-filterable-current=":runtime:io:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../-sdk-byte-write-channel/close.html"><span><span>close</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="323297499%2FFunctions%2F1616905611"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag common-like">common</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":runtime:io:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":runtime:io:dokkaHtmlPartial/commonMain"><div class="symbol monospace">abstract fun <a href="../-sdk-byte-write-channel/close.html">close</a>(cause: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html">Throwable</a>?): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<div class="brief "><p class="paragraph">Closes this channel with an optional exceptional <a href="../-sdk-byte-write-channel/close.html">cause</a>. All pending bytes are flushed. This is an idempotent operation — subsequent invocations of this function have no effect and return false</p></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1568931151%2FFunctions%2F1616905611" anchor-label="flush" id="1568931151%2FFunctions%2F1616905611" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"></a>
+                <div class="table-row" data-filterable-current=":runtime:io:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../-sdk-byte-write-channel/flush.html"><span><span>flush</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1568931151%2FFunctions%2F1616905611"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag common-like">common</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":runtime:io:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":runtime:io:dokkaHtmlPartial/commonMain"><div class="symbol monospace">abstract fun <a href="../-sdk-byte-write-channel/flush.html">flush</a>()<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<div class="brief "><p class="paragraph">Flushes all pending write bytes making them available for read. Thread safe and can be invoked at any time. It does nothing when invoked on a closed channel.</p></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-75947491%2FFunctions%2F1616905611" anchor-label="readAvailable" id="-75947491%2FFunctions%2F1616905611" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"></a>
+                <div class="table-row" data-filterable-current=":runtime:io:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../-sdk-byte-read-channel/read-available.html"><span>read</span><wbr><span><span>Available</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-75947491%2FFunctions%2F1616905611"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag common-like">common</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":runtime:io:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":runtime:io:dokkaHtmlPartial/commonMain"><div class="symbol monospace">abstract suspend fun <a href="../-sdk-byte-read-channel/read-available.html">readAvailable</a>(sink: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html">ByteArray</a>, offset: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a> = 0, length: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a> = sink.size - offset): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<div class="brief "><p class="paragraph">Reads all available bytes to <a href="../-sdk-byte-read-channel/read-available.html">sink</a> buffer and returns immediately or suspends if no bytes available</p></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="843804540%2FFunctions%2F1616905611" anchor-label="readFully" id="843804540%2FFunctions%2F1616905611" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"></a>
+                <div class="table-row" data-filterable-current=":runtime:io:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../-sdk-byte-read-channel/read-fully.html"><span>read</span><wbr><span><span>Fully</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="843804540%2FFunctions%2F1616905611"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag common-like">common</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":runtime:io:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":runtime:io:dokkaHtmlPartial/commonMain"><div class="symbol monospace">abstract suspend fun <a href="../-sdk-byte-read-channel/read-fully.html">readFully</a>(sink: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html">ByteArray</a>, offset: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a> = 0, length: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a> = sink.size - offset)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<div class="brief "><p class="paragraph">Reads all length bytes to <a href="../-sdk-byte-read-channel/read-fully.html">sink</a> buffer or fails if source has been closed. Suspends if not enough bytes available.</p></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-584799758%2FFunctions%2F1616905611" anchor-label="readRemaining" id="-584799758%2FFunctions%2F1616905611" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"></a>
+                <div class="table-row" data-filterable-current=":runtime:io:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../-sdk-byte-read-channel/read-remaining.html"><span>read</span><wbr><span><span>Remaining</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-584799758%2FFunctions%2F1616905611"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag common-like">common</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":runtime:io:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":runtime:io:dokkaHtmlPartial/commonMain"><div class="symbol monospace">abstract suspend fun <a href="../-sdk-byte-read-channel/read-remaining.html">readRemaining</a>(limit: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a> = Int.MAX_VALUE): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html">ByteArray</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<div class="brief "><p class="paragraph">Read up to <a href="../-sdk-byte-read-channel/read-remaining.html">limit</a> bytes into a <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html">ByteArray</a> suspending until <a href="../-sdk-byte-read-channel/read-remaining.html">limit</a> is reached or the channel is closed.</p></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1583364295%2FFunctions%2F1616905611" anchor-label="writeAvailable" id="-1583364295%2FFunctions%2F1616905611" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"></a>
+                <div class="table-row" data-filterable-current=":runtime:io:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../-sdk-byte-write-channel/write-available.html"><span>write</span><wbr><span><span>Available</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1583364295%2FFunctions%2F1616905611"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag common-like">common</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":runtime:io:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":runtime:io:dokkaHtmlPartial/commonMain"><div class="symbol monospace">abstract suspend fun <a href="../-sdk-byte-write-channel/write-available.html">writeAvailable</a>(src: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html">ByteArray</a>, offset: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a> = 0, length: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a> = src.size - offset): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<div class="brief "><p class="paragraph">Writes as much as possible and only suspends if buffer is full Returns the byte count written.</p></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-706149736%2FFunctions%2F1616905611" anchor-label="writeFully" id="-706149736%2FFunctions%2F1616905611" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"></a>
+                <div class="table-row" data-filterable-current=":runtime:io:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../-sdk-byte-write-channel/write-fully.html"><span>write</span><wbr><span><span>Fully</span></span></a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-706149736%2FFunctions%2F1616905611"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag common-like">common</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":runtime:io:dokkaHtmlPartial/commonMain" data-filterable-set=":runtime:io:dokkaHtmlPartial/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":runtime:io:dokkaHtmlPartial/commonMain"><div class="symbol monospace">abstract suspend fun <a href="../-sdk-byte-write-channel/write-fully.html">writeFully</a>(src: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html">ByteArray</a>, offset: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a> = 0, length: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a> = src.size - offset)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<div class="brief "><p class="paragraph">Writes all <a href="../-sdk-byte-write-channel/write-fully.html">src</a> bytes and suspends until all bytes written.</p></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="go-to-top-icon"><a href="#content"></a></span><span>© 2021, Amazon Web Services, Inc. or its affiliates. All rights reserved.</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span></div>
+      </div>
+    </div>
+  
+</body></html>
+
+

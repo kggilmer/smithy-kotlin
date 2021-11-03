@@ -42,4 +42,5 @@ jobs:
           user_name: AWS CI
           user_email: nobody@amazonaws.com
           commit_message: Update docs
-          disable_nojekyll: true
+          disable_nojekyll: false
+          enable_jekyll: false

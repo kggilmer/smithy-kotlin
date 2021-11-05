@@ -35,7 +35,7 @@ jobs:
       - name: Compress Complete Docs
         if: env.PUBLISH_ARTIFACT == 'true'
         run: |
-          tar cJvf api-docs.tar.xz -C ${{ env.DOC_LOCATION }}/* .
+          tar cJvf api-docs.tar.xz -C ${{ env.DOC_LOCATION }} .
       - name: Upload Complete Artifact
         if: env.PUBLISH_ARTIFACT == 'true'
         uses: actions/upload-artifact@v2

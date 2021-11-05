@@ -44,4 +44,4 @@ jobs:
         with:
           tag_name: api-docs
           files: |
-            all-api-docs.zip
+            ${{ env.DOC_LOCATION }}/all-api-docs.zip

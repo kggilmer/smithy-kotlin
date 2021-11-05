@@ -38,6 +38,12 @@ jobs:
         with:
           name: all-api-docs
           path: ${{ env.DOC_LOCATION }}
+      - name: Where is everything
+        run: |
+          set -x
+          pwd
+          find .
+          ls -l ${{ env.DOC_LOCATION }}
       - name: Release
         uses: softprops/action-gh-release@v1
         # if: startsWith(github.ref, 'refs/tags/')
@@ -45,3 +51,4 @@ jobs:
           tag_name: api-docs
           files: |
             ${{ env.DOC_LOCATION }}/all-api-docs.zip
+            ${{ env.DOC_LOCATION }}/package-list

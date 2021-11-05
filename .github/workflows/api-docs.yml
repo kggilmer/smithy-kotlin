@@ -1,16 +1,13 @@
-name: API Docs Generation
+name: API Docs
 
-on:
+on: # TODO: determine best event hook (release, etc)
   workflow_dispatch:
-    inputs:
-      tag:
-        description: 'Tag to generate API docs from'
-        required: true
 
 env:
-  PACKAGE_NAME: smithy-kotlin
   DOC_LOCATION: build/dokka/htmlMultiModule
   GH_PAGES_BRANCH: api-docs
+  PUBLISH_GH_PAGES: false # toggle publishing on github pages branch
+  PUBLISH_ARTIFACT: true # toggle publishing all docs as artifact
 
 jobs:
   api-docs:
@@ -18,20 +15,11 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.inputs.tag }}
-      - name: Cache
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: ${{ runner.os }}-gradle-
-      - name: Generate API Docs for ${{ env.PACKAGE_NAME }}
+      - name: Generate API Docs
         run: |
           ./gradlew dokkaHtmlMultiModule
       - name: Stage in branch
+        if: env.PUBLISH_GH_PAGES == 'true'
         uses: peaceiris/actions-gh-pages@v3.7.3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -42,4 +30,15 @@ jobs:
           user_name: AWS CI
           user_email: nobody@amazonaws.com
           commit_message: Update docs
-          disable_nojekyll: true
+          disable_nojekyll: false
+          enable_jekyll: false
+      - name: Compress Complete Docs
+        if: env.PUBLISH_ARTIFACT == 'true'
+        run: |
+          tar cJvf api-docs.tar.xz -C ${{ env.DOC_LOCATION }}/* .
+      - name: Upload Complete Artifact
+        if: env.PUBLISH_ARTIFACT == 'true'
+        uses: actions/upload-artifact@v2
+        with:
+          name: all-api-docs
+          path: api-docs.tar.xz
